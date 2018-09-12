@@ -1,4 +1,3 @@
-package sapper.mario.assignment3;
 import javax.swing.JFrame;
 import java.awt.Toolkit;
 

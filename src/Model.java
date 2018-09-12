@@ -1,4 +1,3 @@
-package sapper.mario.assignment3;
 import java.util.ArrayList;
 
 
@@ -6,41 +5,33 @@ class Model
 {
 	// Class serving as the model for the game.
 	
-	// Member variables.
+	// Class object member variables.
+	ArrayList<Brick> bricks;
+	Mario mario;
+	View view;
+	Brick drag;
+
+
+	// Member variables for drawing and dragging bricks.
 	boolean dragged;
 	int cameraPos;
 	int width;
 	int height;
 	int curX;
 	int curY;
-	Brick drag;
-	ArrayList<Brick> bricks;
-	Mario mario;
-	int marioPosX;
-	int marioPosY;
-	int marioW;
-	int marioH;
-	int marioPos;
-	int brickPos;
+	
+	// Member variables for getting JPanel coordinates.
 	int rightPanelX;
 	int cameraWidth;
-	int movePixels;
-	int ground_vel;
-	int brick_vel;
-	int marioMapPos;
-	int prevMarioPos;
 	
+	// Member variables for collision detection.
 	boolean leftBarrier;
 	boolean rightBarrier;
 	boolean topBarrier;
 	boolean bottomBarrier;
-	boolean collisionDetected;
-	boolean moveOK;
-	boolean inBrick;
 	int[] collision;
 	int groundY;
 	
-	View view;
 	
 
 
@@ -49,32 +40,14 @@ class Model
 	{
 		// Class constructor.
 		
-		mario = new Mario(0, 0, 60, 95);
+		mario = new Mario(0, 0, 60, 95); // Initialize Mario
 
-		//this.updateMario(mario.x, mario.y, mario.w, mario.h); // Setter for Mario Coordinates in Model.java
-		
-		bricks = new ArrayList<Brick>();
-        cameraPos = 0;
-        dragged = false;
-        marioPos = 0;
-        rightPanelX = 0;
+		bricks = new ArrayList<Brick>(); // ArrayList of bricks; Dynamically adds bricks with mouse.
+        cameraPos = 0; // Tracks camera position.
+        dragged = false; // For dragging to make bricks.
+        rightPanelX = 0; // right side of JPanel.
         cameraWidth = 0;
-        ground_vel = movePixels;
-        brick_vel = movePixels;
-
-        collisionDetected = false;
-        leftBarrier = false;
-        rightBarrier = false;
-        topBarrier = false;
-        bottomBarrier = false;
-        moveOK = true;
-        marioMapPos = mario.x + marioPos;
-        inBrick = false;
-        prevMarioPos = 0;
-        collision = new int[8];
-        
-        
-        
+ 
 	}
 
 	public void update()

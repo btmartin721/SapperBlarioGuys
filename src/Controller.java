@@ -1,4 +1,3 @@
-package sapper.mario.assignment3;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.ActionListener;
@@ -16,6 +15,7 @@ class Controller implements MouseListener, KeyListener, MouseMotionListener
 	// Initialize member variables.
     View view;
     Model model;
+    
     boolean keyLeft;
 	boolean keyRight;
 	boolean keyUp;
@@ -24,18 +24,9 @@ class Controller implements MouseListener, KeyListener, MouseMotionListener
 	boolean keyL;
 	boolean keySpace;
 	boolean inDrag;
-	boolean noCollision;
 	boolean lastKeyRight;
 	int mouseClickX;
 	int mouseClickY;
-	boolean leftBarrier;
-	boolean topBarrier;
-	boolean rightBarrier;
-	boolean bottomBarrier;
-	int movePixels;
-	int marioPos;
-	int brickPosition;
-	double xVelocity;
 
 	Controller(Model m)
 	{
@@ -49,14 +40,6 @@ class Controller implements MouseListener, KeyListener, MouseMotionListener
 		keyS = false;
 		keyL = false;
 		lastKeyRight = true;
-		noCollision = true;
-		leftBarrier = true;
-		topBarrier = true;
-		rightBarrier = true;
-		bottomBarrier = true;
-		movePixels = 0;
-		marioPos = 0;
-		xVelocity = 1.0;
 	}
 	
 	void setView(View v)

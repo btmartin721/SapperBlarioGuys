@@ -1,4 +1,3 @@
-package sapper.mario.assignment3;
 
 
 public class Brick

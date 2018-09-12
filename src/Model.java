@@ -38,17 +38,20 @@ class Model
 	boolean moveOK;
 	boolean inBrick;
 	int[] collision;
+	int groundY;
 	
 	View view;
 	
 
 
 
-	Model(Mario m)
+	Model()
 	{
 		// Class constructor.
-		mario = m;
-		this.updateMario(mario.x, mario.y, mario.w, mario.h); // Setter for Mario Coordinates in Model.java
+		
+		mario = new Mario(0, 0, 60, 95);
+
+		//this.updateMario(mario.x, mario.y, mario.w, mario.h); // Setter for Mario Coordinates in Model.java
 		
 		bricks = new ArrayList<Brick>();
         cameraPos = 0;
@@ -56,7 +59,6 @@ class Model
         marioPos = 0;
         rightPanelX = 0;
         cameraWidth = 0;
-        movePixels = mario.movePixels;
         ground_vel = movePixels;
         brick_vel = movePixels;
 
@@ -78,10 +80,11 @@ class Model
 	public void update()
 	{
 		
-		mario.update();
+		groundY = view.groundCoordY;
+		mario.update(groundY, bricks);
 		
-
-		this.updateMario(mario.x, mario.y, mario.w, mario.h);
+		
+		/*this.updateMario(mario.x, mario.y, mario.w, mario.h);
 		
 		this.marioMapPos = mario.x + marioPos;
 
@@ -124,18 +127,18 @@ class Model
 				if(marioRight)
 				{
 					mario.breakCollision(-3);
-				}
+				}*/
 					
 								
-			}
-			else
-			{
+			//}
+			//else
+			//{
 				
-				collisionDetected = false;
-				moveOK = true;
+				//collisionDetected = false;
+				//moveOK = true;
 				//System.out.println("No collision");
-			}
-		}
+			//}
+		//}
 		
 
 	}
@@ -217,18 +220,18 @@ class Model
 	}
 	
 	
-	void updateMario(int x, int y, int w, int h)
+	/*void updateMario(int x, int y, int w, int h)
 	{
 		marioPosX = x;
 		marioPosY = y;
 		marioW = w;
 		marioH = h;
 		
-	}
+	}*/
 	
-	int[] checkCollisions(Brick brick, int nextX, int nextY)
+	void checkCollisions(Brick brick)
 	{
-		int[] collisionsArr = new int[8];
+	/*	int[] collisionsArr = new int[8];
 		if(mario.right + nextX < brick.left || mario.left + nextX > brick.right)
 		{
 			collisionsArr[0] = 0;
@@ -273,11 +276,11 @@ class Model
 			collisionsArr[7] = brick.bottom;
 		}
 		
-		return collisionsArr;
+		return collisionsArr;*/
 	}
 	
 	
-	int marioPosition()
+	/*int marioPosition()
 	{
 		this.marioPos = mario.marioMapPos;
 		
@@ -285,12 +288,12 @@ class Model
 			this.marioPos = 0;
 		
 		return marioPos;
-	}
+	}*/
 	
-	void setMove(boolean value)
-	{
-		mario.moveFlag = value;
-	}
+	//void setMove(boolean value)
+	//{
+	//	mario.moveFlag = value;
+	//}
 	
 
 	
@@ -300,10 +303,10 @@ class Model
 	//	this.ground_vel = mario.ground_vel;
 	//}
 	
-	void setVelX(double velX)
-	{
-		mario.velocityX = velX;
-	}
+	//void setVelX(double velX)
+	//{
+		//mario.velocityX = velX;
+	//}
 	
 	void setView(View v)
 	{

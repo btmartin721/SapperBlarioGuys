@@ -21,7 +21,6 @@ class View extends JPanel
 	
 	// Initialize Member variables.
 	Model model;
-	Mario mario;
 	Dimension screenSize;
 	BufferedImage brick_image;
 	BufferedImage ground_block;
@@ -36,15 +35,13 @@ class View extends JPanel
 	int marioMapPos;
 	
 	
-	View(Controller c, Model m, Mario ma)
+	View(Controller c, Model m)
 	{
         // View class constructor.
         c.setView(this);
-        ma.setView(this);
         m.setView(this);
         
         model = m;
-        mario = ma;
                
     	// Loads Brick image from file.
 		this.brick_image = loadImage("brick.png");
@@ -76,7 +73,7 @@ class View extends JPanel
 	public void paintComponent(Graphics g)
 	{
         // Paints objects to screen.
-		groundCoordY = this.getHeight() - model.marioH - 50;
+		groundCoordY = this.getHeight() - model.mario.h - 50;
 		mapSize = this.getWidth() * 2;
 		//marioCameraPos = this.getWidth() / 2;
 		//model.marioPosX = marioCameraPos; // This puts Mario in the center of the panel.
@@ -87,7 +84,7 @@ class View extends JPanel
 		
 		Brick d = model.drag; // Brick object while dragging.
 
-		g.drawImage(current_mario, model.marioPosX, model.marioPosY, model.marioW, model.marioH, null);
+		g.drawImage(current_mario, model.mario.x, model.mario.y, model.mario.w, model.mario.h, null);
 
 		
 		if(model.dragged)

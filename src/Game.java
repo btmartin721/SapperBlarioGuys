@@ -17,10 +17,9 @@ public class Game extends JFrame
 	public Game()
 	{
         // Constructor for Game class.
-		mario = new Mario(0, 0, 60, 95);
-        model = new Model(mario);
+        model = new Model();
 		controller = new Controller(model);
-		view = new View(controller, model, mario);
+		view = new View(controller, model);
 		view.screenSize = Toolkit.getDefaultToolkit().getScreenSize();
 		this.setTitle("Sapper Mario Guys");
 		this.setSize(view.screenSize.getSize());
@@ -45,8 +44,8 @@ public class Game extends JFrame
         // Runs the program while JFrame is open.
 		while(true)
 		{
-			model.update();
 			controller.update();
+			model.update();
 			view.repaint(); // Indirectly calls View.paintComponent
 			Toolkit.getDefaultToolkit().sync(); // Updates screen
 	

@@ -22,6 +22,7 @@ class Controller implements MouseListener, KeyListener, MouseMotionListener
 	boolean keyDown;
 	boolean keyS;
 	boolean keyL;
+	boolean keySpace;
 	boolean inDrag;
 	boolean noCollision;
 	boolean lastKeyRight;
@@ -138,6 +139,7 @@ class Controller implements MouseListener, KeyListener, MouseMotionListener
 			case KeyEvent.VK_DOWN: keyDown = true; break; // Arrow down key.
 			case KeyEvent.VK_S: keyS = true; break; // S key.
 			case KeyEvent.VK_L: keyL = true; break; // L key.
+			case KeyEvent.VK_SPACE: keySpace = true; break; // Space Key.
 		}
 	}
 
@@ -154,6 +156,8 @@ class Controller implements MouseListener, KeyListener, MouseMotionListener
 			case KeyEvent.VK_DOWN: keyDown = false; break; // Arrow down key.
 			case KeyEvent.VK_S: keyS = false; break; // S key.
 			case KeyEvent.VK_L: keyL = false; break; // L key.
+			case KeyEvent.VK_SPACE: keySpace = false; break; // Space Key.
+
 		}
 	}
 
@@ -165,45 +169,46 @@ class Controller implements MouseListener, KeyListener, MouseMotionListener
 	{
 				
 		
-		
-		movePixels = model.movePixels;
-        // What to do when specific keys are pressed.
+	        // What to do when specific keys are pressed.
 
 			if(keyRight) // Scrolls screen right.
 			{
-				if(model.collisionDetected == false)
+				model.mario.x += model.mario.velX;
+				/*if(model.collisionDetected == false)
 				{
 					this.marioPos = model.marioPosition();
 				
 					model.setMove(true);
-					model.setVelX(xVelocity);
+					model.setVelX(xVelocity);*/
 					
-					int frame = 0;
-					frame = view.cycleMario(view.mario_images_right);
-					view.current_mario = view.mario_images_right[frame];
-				}
+				int frame = 0;
+				frame = view.cycleMario(view.mario_images_right);
+				view.current_mario = view.mario_images_right[frame];
+				/*}
 				else if(model.collisionDetected)
 				{
 					//model.setMove(false);
 					this.marioPos = model.marioPosition();
 					model.setVelX(0.0);
-
-					int frame = 0;
-					view.current_mario = view.mario_images_right[frame];
+*/
+					//int frame = 0;
+					//view.current_mario = view.mario_images_right[frame];
 					
-				}	
+				//}	
 			} 
 			else if (keyRight == false && lastKeyRight == true)
 			{
-				model.setMove(false);
-				model.setVelX(0.0);
+				//model.setMove(false);
+				//model.setVelX(0.0);
 				view.current_mario = view.mario_images_right[0];
+				
 			}
 
 			if(keyLeft) // Scrolls screen left.
 			{
 				
-				if(model.collisionDetected == false)
+				model.mario.x -= model.mario.velX;
+				/*if(model.collisionDetected == false)
 				{
 					
 					if(model.cameraPos < 0) 
@@ -220,30 +225,35 @@ class Controller implements MouseListener, KeyListener, MouseMotionListener
 					{
 						model.setMove(true);
 						model.setVelX(-xVelocity);
-					}
+					}*/
 					
 					int frame = 0;
 					frame = view.cycleMario(view.mario_images_left);
 					view.current_mario = view.mario_images_left[frame];
-				}
-				else if(model.collisionDetected)
-				{
+				//}
+				//else if(model.collisionDetected)
+				//{
 					//model.setMove(false);
-					this.marioPos = model.marioPosition();
-					model.setVelX(0.0);
+					//this.marioPos = model.marioPosition();
+					//model.setVelX(0.0);
 
 						
-					int frame = 0;
-					view.current_mario = view.mario_images_left[frame];
-				}
+					//int frame = 0;
+					//view.current_mario = view.mario_images_left[frame];
+				//}
 		
 			}
 			else if (keyLeft == false && lastKeyRight == false)
 			{
-				model.setMove(false);
-				model.setVelX(0.0);
+				//model.setMove(false);
+				//model.setVelX(0.0);
 				view.current_mario = view.mario_images_left[0];
 			}
+			
+		if(keySpace)
+		{
+			model.mario.y -= model.mario.velY;
+		}
 		
 		model.rightPanelX = model.cameraPos + view.getWidth();
 		
@@ -262,6 +272,7 @@ class Controller implements MouseListener, KeyListener, MouseMotionListener
 			Json loaded = Json.load("map.Json");
 			model.unmarshall(loaded); // Load from file "map.Json".
 		}
+		
 	}
 	
 }

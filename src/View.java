@@ -130,7 +130,7 @@ class View extends JPanel
 
 	}
 	
-	public int cycleMario(Image[] img_array)
+	int cycleMario(Image[] img_array)
 	{
 		this.currentFrame++;
 		if (this.currentFrame >= img_array.length)

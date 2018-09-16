@@ -124,9 +124,9 @@ class Controller implements MouseListener, KeyListener, MouseMotionListener
 			case KeyEvent.VK_L: keyL = true; break; // L key.
 			case KeyEvent.VK_SPACE: 
 				if(model.mario.solidGround < 5)
-					{
-						keySpace = true; break; // Space Key.
-					}
+				{
+					keySpace = true; break; // Space Key.
+				}
 		}
 	}
 
@@ -239,14 +239,15 @@ class Controller implements MouseListener, KeyListener, MouseMotionListener
 			
 		if(keySpace)
 		{	
-			model.mario.keySpace = true;
-			model.mario.y -= model.mario.velY;
+			model.mario.jumping = true;
+			//model.mario.vert_vel = -6.1;
+			//model.mario.y -= model.mario.velY;
 		
 
 		
 		}
 		else
-			model.mario.keySpace = false;
+			model.mario.jumping = false;
 		
 		model.rightPanelX = model.cameraPos + view.getWidth();
 		

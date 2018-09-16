@@ -18,13 +18,16 @@ class Mario
 	int prevY;
 	int solidGround;
 	double velX;
-	double velY;
+	double yVel;
 	double vert_vel;
 	double gravity;
 	boolean isCollision;
 	boolean breakCollision;
-	boolean keySpace;
+	boolean jumping;
 	boolean topCollision;
+	int jumpHeight;
+	double jumpStrength;
+	int brickIDX;
 
 
 	Mario(int _x, int _y, int _w, int _h)
@@ -38,24 +41,41 @@ class Mario
 		left = 0; // Mario's left side.
 		right = 0; // Mario's right side.
 		velX = 25.1; // For running.
-		velY = 30.1; // For jumping.
+		yVel = 30.1; // For jumping.
 		vert_vel = 0.0; // For gravity.
 		gravity = 1.2;
 		isCollision = false;
 		breakCollision = false;
-		keySpace = false;
+		jumping = false;
 		topCollision = false;
 		solidGround = 0;
+		jumpHeight = 30;
+		jumpStrength = 30.1;
+		brickIDX = 0;
 		
 	}
 	
 	void update(int groundY, ArrayList<Brick> bricks)
 	{
 		
-		
-		vert_vel += gravity;
-		y += vert_vel;
 		solidGround++;
+		
+		
+  		if(jumping)
+		{
+			vert_vel = jumpStrength;
+			y -= vert_vel;
+			
+			jumpStrength -= 1.2;
+		}
+		else if(!jumping && !topCollision)
+		{
+			jumpStrength = yVel;
+			vert_vel += gravity;
+			y += vert_vel;
+		}
+			
+		
 		
 		if(y > groundY) // If on the ground, snap back to ground.
 		{
@@ -79,34 +99,34 @@ class Mario
 			
 			isCollision = checksCollision(b);
 			
+			topCollision = false;
 			if(isCollision)// If collision.
 			{
-				topCollision = false;
-				getCollisionSide(b); // Get side of collision.
+				brickIDX = i;
+				
+				topCollision = breakCollision(b); // Get side of collision.
 				if(topCollision)
 				{
 					solidGround = 0;
-					if(keySpace)
-					{	
-						gravity = 0.0;
+				}
+						
+			}
+			else if(!isCollision)
+			{
+				
+				if(topCollision)
+				{
+					topCollision = breakCollision(b);
+					if(topCollision)
+					{
 						vert_vel = 0.0;
-						y -= velY;
-						solidGround++;
 					}
-					
 				}
 				
-			
-			}
-			else // No collision.
-			{
-				gravity = 1.2; // Because if Mario on top of brick, gravity = 0.0
-			
-			
+ 				System.out.println("break here");
 			}
 		}
 		
-		System.out.println(solidGround);
 		prevX = x; // Gets Mario's previous x coordinate.
 		prevY = y; // Gets Mario's previous y coordinate.
 		
@@ -119,7 +139,7 @@ class Mario
 			return false;
 		if(this.left >= _b.right)
 			return false;
-		if(this.bottom <= _b.top) // assumes bigger is downward
+		if(this.bottom <=_b.top) // assumes bigger is downward
 			return false;
 		if(this.top >= _b.bottom) // assumes bigger is downward
 			return false;
@@ -127,7 +147,7 @@ class Mario
 	}
 	
 	
-	void getCollisionSide(Brick _b)
+	boolean breakCollision(Brick _b)
 	{
 		// Gets side of collision.
 		int x_offset = 0;
@@ -138,18 +158,21 @@ class Mario
 		int prevTop = prevY;
 		int prevBottom = prevY + h;
 		
+		boolean topColl = false;
 		
 		if(this.right >= _b.left && prevRight < _b.left) // Left side collision.
 		{
 			// Mario to left of brick.
 			x_offset = this.right - _b.left;
 			x = x - x_offset - 1;
+			topColl = false;
 		}
 		else if(this.left <= _b.right && prevLeft > _b.right) // Right side collision.
 		{
 			// Mario to right of brick.
 			x_offset = this.left - _b.right;
 			x = x - x_offset + 1; // 1 pixel to right of brick.
+			topColl = false;
 		}
 		
 		if(this.top <= _b.bottom && prevTop > _b.bottom) // Assumes downward is bigger.
@@ -157,16 +180,18 @@ class Mario
 			// Mario below brick.
 			y_offset = this.top - _b.bottom;
 			y = y - y_offset + 1; // 1 pixel below brick.
+			topColl = false;
 		}
-		else if (this.bottom >= _b.top && prevBottom < _b.top) // Assumes downward is bigger.
+		else if (this.bottom >=_b.top && prevBottom <= _b.top) // Assumes downward is bigger.
 		{
 			// Mario on top of brick.
 			y_offset = this.bottom - _b.top;
 			//y = y - y_offset - 1; // 1 pixel above brick.
-			y = y - y_offset - 1;
-			topCollision = true;
+			y = _b.top - this.h - 1;
+			topColl = true;
 		}
-						
+					
+		return topColl;
 	}
 	
 	
